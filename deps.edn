@@ -1,0 +1,9 @@
+{:paths
+ ["src"]
+
+ :deps
+ {}
+
+ :aliases
+ {:random-clojure-core-functions
+  {:exec-fn stdlib-exploration/print-random-clojure-core-functions!}}}
