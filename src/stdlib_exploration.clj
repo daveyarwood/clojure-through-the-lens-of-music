@@ -2,7 +2,9 @@
   (:require [clojure.string :as str]))
 
 (def ^:const all-clojure-core-functions
-  (vals (ns-publics 'clojure.core)))
+  (->> (ns-publics 'clojure.core)
+       vals
+       (filter #(fn? @%))))
 
 (defn- strings-in-composite
   [x]
