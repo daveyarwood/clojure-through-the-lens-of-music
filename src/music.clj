@@ -1,10 +1,11 @@
 (ns music
-  (:require [alda.core :refer [connect! new-score! play! part note pitch
+  (:require [alda.core :refer [connect! new-score! play! stop! part note pitch
                                note-length midi-note ms]]))
 
 (comment
   (connect!)
   (new-score!)
+  (stop!)
 
   ;; alda-clj has data structures that can map exactly to Alda syntax:
   (play!
@@ -65,9 +66,6 @@
     (part "harp")
     (chromatic-scale 50))
 
-  ;; {:pitch {...}, :duration {...}}
-  (first (chromatic-scale 50))
-
 
 
 
@@ -91,49 +89,23 @@
     (get-in note [:duration :number]))
 
   (count (chromatic-scale 50))
-  (count (filter #(even? (note-number %)) (chromatic-scale 50)))
 
-
-
-
-
-
-
-
-
-
-
+  (count (filter #(even? (note-number %))
+                 (chromatic-scale 50)))
 
   (play!
     (part "harp")
-    (filter #(even? (note-number %)) (chromatic-scale 50)))
+    (chromatic-scale 100))
 
   (play!
     (part "harp")
-    (filter #(-> % note-number (mod 2) zero?) (chromatic-scale 100)))
-
-  (def notes
-    (filter #(<= 25 (note-number %) 45) (chromatic-scale 100)))
+    (filter #(even? (note-number %))
+            (chromatic-scale 100)))
 
   (play!
     (part "harp")
-    notes)
-
-  (defn update-pitch
-    [note f & args]
-    (apply update-in note [:pitch :note-number] f args))
-
-  (defn update-duration
-    [note f & args]
-    (apply update-in note [:duration :number] f args))
-
-  (play!
-    (part "harp")
-    (map #(update-pitch % * 2) notes))
-
-  (play!
-    (part "harp")
-    (map #(update-duration % * 2) notes))
+    (filter #(-> % note-number (mod 2) zero?)
+            (chromatic-scale 100)))
 
 
 
@@ -147,6 +119,9 @@
 
 
   ;;; repeatedly, rand-nth, cycle, take
+
+  (rand-nth [1 2 3 4 5])
+  (repeatedly 3 #(rand-nth [1 2 3 4 5]))
 
   (let [note-numbers (repeatedly 3 #(rand-nth (range 24 102)))]
     (prn :note-numbers note-numbers)
@@ -313,6 +288,22 @@
     (part "trumpet")
     (scale 58 minor-scale-intervals))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   (play!
     (part "trumpet")
     (scale 58 octatonic-scale-intervals))
@@ -328,6 +319,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
   (defn random-scale
     [starting-note]
     (let [intervals (repeatedly 7 #(rand-nth [1 2 3]))]
@@ -337,17 +339,6 @@
   (play!
     (part "trumpet")
     (random-scale 58))
-
-
-
-
-
-
-
-
-
-
-
 
 
   ;;; concat
