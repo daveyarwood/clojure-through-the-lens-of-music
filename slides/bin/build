@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+scriptdir="$(dirname "$0")"
+rootdir="$scriptdir/.."
+
+function estimated_length() {
+  grep -Eo "[[:digit:]]+ minutes?" "$rootdir/index.adoc" \
+    | grep -Eo "[[:digit:]]+" \
+    | ruby -e 'sum = 0; while n = gets; sum += n.chomp.to_i; end; p sum'
+}
+
+printf "Build: "
+if bundle exec asciidoctor-revealjs "$rootdir/index.adoc"; then
+  printf OK
+else
+  printf FAIL
+fi
+
+echo " (~$(estimated_length)/45 minutes planned)"

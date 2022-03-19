@@ -1,0 +1,101 @@
+= Clojure through the lens of music
+:title-separator: {sp}|
+:!sectids:
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+:revealjs_customtheme: styles/djy.css
+:revealjs_transition: none
+:revealjs_transitionSpeed: fast
+:revealjs_controls: false
+:revealjs_progress: false
+:highlightjs-theme: styles/gruvbox-dark.css
+
+[.notes]
+--
+1 minute
+--
+
+image:title-slide.svg[]
+
+== !
+
+[.notes]
+--
+1 minute
+* Here's a little bit about me
+* Quick timeline of my background
+** Don't go too into detail about the origin story of Alda
+--
+
+[cols="2*"]
+|===
+| image:dave-drums.jpg[Dave playing drums,450,450]
+a|
+[no-bullet]
+* Music degree (UNC '08)
+* Alda creator/BDFL (2012-)
+* Software engineer at Kevel (2014-)
+* icon:github[] *daveyarwood*
+* icon:twitter[] *@dave_yarwood*
+* image:keybase-logo.svg[keybase logo,25,25,role=inline] *daveyarwood*
+* icon:globe[] *djy.io, alda.io*
+|===
+
+== !
+
+[.notes]
+--
+* 2 minutes
+** Alda is a text-based music composition language
+** You can write your scores in a text format, as an alternative to traditional
+   sheet music. And I believe that there are benefits to writing music in a text
+   format, which I'll describe shortly.
+** Currently, the focus is on MIDI. Alda will play your scores using the MIDI
+   synthesizer that's built into the Java Virtual Machine. Or you can use Alda
+   to export a MIDI file, which you can do a lot of useful things with, such as
+   importing it into a DAW, or importing it into a sheet music notation program
+   if you want to convert your Alda score into traditional sheet music.
+** I do have some grand plans for the future that involve stepping outside of
+   MIDI and playing around with waveform synthesis and samplers and all of the
+   fun that that entails.
+--
+
+image::alda-website.png[]
+
+https://alda.io
+
+== alda-clj
+
+image::alda-clj-code.png[80%,80%]
+
+https://github.com/daveyarwood/alda-clj
+
+== Data, calculations, actions
+
+image::grokking-simplicity.jpeg[]
+
+== Data, calculations, actions
+
+[.notes]
+--
+A common pattern in FP is to start by coding data, then calculations, then
+actions. Eric Normand talks about this in his recent book, Grokking Simplicity.
+
+We can see how this approach is beneficial when using a functional programming
+language to generate music. We can generate the data, observe and test it before
+we play it (the action part). Furthermore, we can derive other data (musical
+phrases, etc.) as calculations with the original data as input.
+--
+
+* Data: a list of daily high and low temperatures
+
+* Calculation: a function of temperatures -> music data
+
+* Action: playing the music data
+
+== Visualization
+
+image::racket.png[]
+
+https://docs.racket-lang.org/quick/

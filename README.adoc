@@ -1,0 +1,35 @@
+= Clojure through the lens of music
+
+Slides written in Asciidoc via
+https://github.com/asciidoctor/asciidoctor-reveal.js[asciidoctor-reveal.js].
+
+== Development
+
+Prerequisites::
+
+* https://bundler.io[Bundler]
+
+Setup::
+
+[source, bash]
+----
+cd slides
+bundle install
+----
+
+Build::
+
+[source, bash]
+----
+slides/bin/build
+----
+
+Present::
+
+Open `slides/index.html` in your browser of choice.
+
+== License
+
+Copyright © 2022 Dave Yarwood
+
+Distributed under the Eclipse Public License version 2.0.
