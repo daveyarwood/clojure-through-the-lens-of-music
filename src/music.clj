@@ -2,19 +2,6 @@
   (:require [alda.core :refer [connect! new-score! play! stop! part note pitch
                                note-length midi-note ms]]))
 
-;; Rough timings:
-;; Slides: 11 minutes
-;; Shapes: 6 minutes
-;; Music: 23 minutes
-;; Text to music: 5 minutes
-;;
-;; = exactly 45 minutes!
-
-;; TODO:
-;; * Removes examples below that are less interesting
-;; * Run through and time again
-;; * Goal is to end up with time at the end for wiggle room / questions
-
 (comment
   (connect!)
   (new-score!)
@@ -56,7 +43,7 @@
 
 
   ;; The same notes, but produced programmatically:
-  (play!
+  (play! ; [action]
     (part "piano")
     (map
       ;; [calculation] numbers -> note
@@ -169,6 +156,32 @@
 
 
 
+  ;;; interpose
+
+  (interpose 'x '[a b c d e f g])
+
+  (def notes
+    (let [high-note (note (midi-note 100) (ms 150))
+          low-notes (map
+                      #(note (midi-note %) (ms 150))
+                      (range 20 40))]
+      (interpose high-note low-notes)))
+
+  (play!
+    (part "piano")
+    notes)
+
+
+
+
+
+
+
+
+
+
+
+
   ;;; mapcat
 
   (defn prime-factors
@@ -217,7 +230,7 @@
 
   (play!
     (part "marimba")
-    notes)
+    notes))
 
 
 
@@ -226,150 +239,3 @@
 
 
 
-
-
-
-
-
-
-
-  ;;; interpose
-
-  (interpose 'x '[a b c d e f g])
-
-  (def notes
-    (let [high-note (note (midi-note 100) (ms 150))
-          low-notes (map
-                      #(note (midi-note %) (ms 150))
-                      (range 20 40))]
-      (interpose high-note low-notes)))
-
-  (play!
-    (part "piano")
-    notes)
-
-
-
-
-
-
-
-
-
-
-
-
-  ;;; reduce, reductions
-
-  ;; This is an example of a major scale:
-  (play!
-    "midi-electric-piano-1:
-       o4
-       c d e f g a b > c")
-
-  (def major-scale-intervals
-    [2 2 1 2 2 2 1])
-
-  ;; (-> 2 (+ 2) (+ 1) (+ 2) ...)
-  (reduce + major-scale-intervals)
-
-  ;; (-> 20 (+ 2) (+ 2) (+ 1) (+ 2) ...)
-  (reduce + 20 major-scale-intervals)
-
-  (reductions + major-scale-intervals)
-  (reductions + 20 major-scale-intervals)
-
-  (play!
-    (part "trumpet")
-    (map
-      #(note (midi-note %) (ms 200))
-      (reductions + 58 major-scale-intervals)))
-
-
-
-
-
-
-
-
-
-
-
-  (defn scale
-    [starting-note intervals]
-    (map
-      #(note (midi-note %) (ms 200))
-      (reductions + starting-note intervals)))
-
-  (def minor-scale-intervals
-    [2 1 2 2 1 2 2])
-
-  (def octatonic-scale-intervals
-    [2 1 2 1 2 1 2 1])
-
-  (play!
-    (part "trumpet")
-    (scale 58 minor-scale-intervals))
-
-  (play!
-    (part "trumpet")
-    (scale 58 octatonic-scale-intervals))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  (defn octatonic-scale
-    [starting-note scale-length]
-    (let [intervals (take scale-length (cycle [2 1]))]
-      (scale starting-note intervals)))
-
-  (play!
-    (part "trumpet")
-    (octatonic-scale 58 16))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  (defn random-scale
-    [starting-note]
-    (let [intervals (repeatedly 7 #(rand-nth [1 2 3]))]
-      (prn :intervals intervals)
-      (scale starting-note intervals)))
-
-  (play!
-    (part "trumpet")
-    (random-scale 58))
-
-
-  ;;; concat
-
-  (play!
-    (part "trumpet")
-    (concat
-      (random-scale 58)
-      (random-scale 58)
-      (random-scale 58)
-      (random-scale 58))))

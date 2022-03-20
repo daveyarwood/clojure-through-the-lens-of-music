@@ -5,6 +5,8 @@
 (def ● '●)
 
 (comment
+  [■ ▲ ●]
+
   ;; repeat
   (repeat ■)
   (repeat 10 ■)

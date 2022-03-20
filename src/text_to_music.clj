@@ -6,7 +6,13 @@
             [clojure.string     :as    str]))
 
 (def DICTIONARY-WORDS
-  (delay (line-seq (io/reader (io/file "/usr/share/dict/words")))))
+  (delay
+    (->> (io/file "/usr/share/dict/words")
+         io/reader
+         line-seq
+         ;; There are a lot of words in that file ending in 's, for some reason,
+         ;; and it's noticeable when you sample them.
+         (remove #(str/ends-with? % "'s")))))
 
 (def INSTRUMENTS
   (delay (-> (sh/sh "alda" "instruments")
@@ -140,22 +146,13 @@
     (new-score!)
     (play! (generate-score
              (repeatedly 3 random-word)
-             8)))
+             4)))
 
   ;; Same thing, but with fixed (non-random) input
   (do
     (new-score!)
     (play! (generate-score
-             ["Clojure"
-              "through the lens"
-              "of music"]
-             4)))
-
-  ;; My name as a motif
-  (do
-    (new-score!)
-    (play! (generate-score
-             ["dave yarwood"]
+             ["Functional Conf"]
              4)))
 
   ;; e.e. cummings - (Me up at does)
