@@ -2,12 +2,25 @@
   (:require [alda.core :refer [connect! new-score! play! stop! part note pitch
                                note-length midi-note ms]]))
 
+;; Rough timings:
+;; Slides: 11 minutes
+;; Shapes: 6 minutes
+;; Music: 23 minutes
+;; Text to music: 5 minutes
+;;
+;; = exactly 45 minutes!
+
+;; TODO:
+;; * Removes examples below that are less interesting
+;; * Run through and time again
+;; * Goal is to end up with time at the end for wiggle room / questions
+
 (comment
   (connect!)
   (new-score!)
   (stop!)
 
-  ;; alda-clj has data structures that can map exactly to Alda syntax:
+  ;; alda-clj has data structures that map exactly to Alda syntax:
   (play!
     ;; piano: c+2 e8 g+4.
     (part "piano")
@@ -38,8 +51,20 @@
     (note (midi-note 43) (ms 200))
     (note (midi-note 44) (ms 400))
     (note (midi-note 45) (ms 800))
-    (note (midi-note 46) (ms 1600)))
+    (note (midi-note 46) (ms 1600))
+    (note (midi-note 47) (ms 3200)))
 
+
+  ;; The same notes, but produced programmatically:
+  (play!
+    (part "piano")
+    (map
+      ;; [calculation] numbers -> note
+      #(note (midi-note %1) (ms %2))
+      ;; [data] The numbers 42-47
+      (range 42 48)
+      ;; [data] The first 6 numbers in the sequence 100, 200, 400...
+      (take 6 (iterate #(* % 2) 100))))
 
 
 
@@ -84,9 +109,7 @@
     [note]
     (get-in note [:pitch :note-number]))
 
-  (defn ms-duration
-    [note]
-    (get-in note [:duration :number]))
+  (note-number (note (midi-note 42)))
 
   (count (chromatic-scale 50))
 
@@ -238,7 +261,7 @@
 
   ;;; reduce, reductions
 
-  ;; This is an example of a scale:
+  ;; This is an example of a major scale:
   (play!
     "midi-electric-piano-1:
        o4
@@ -288,25 +311,25 @@
     (part "trumpet")
     (scale 58 minor-scale-intervals))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   (play!
     (part "trumpet")
     (scale 58 octatonic-scale-intervals))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   (defn octatonic-scale
     [starting-note scale-length]
