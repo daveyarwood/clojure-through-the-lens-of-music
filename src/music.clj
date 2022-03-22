@@ -7,6 +7,9 @@
   (new-score!)
   (stop!)
 
+  (play!
+    "piano: c+2 e8 g+4.")
+
   ;; alda-clj has data structures that map exactly to Alda syntax:
   (play!
     ;; piano: c+2 e8 g+4.

@@ -140,19 +140,19 @@
   (stop!)
   (new-score!)
 
+  ;; The string "Functional Conf" as a musical phrase
+  (do
+    (new-score!)
+    (play! (generate-score
+             ["Functional Conf"]
+             4)))
+
   ;; 3 short, repeating parts
   ;; Generated from 3 random words from the dictionary
   (do
     (new-score!)
     (play! (generate-score
              (repeatedly 3 random-word)
-             4)))
-
-  ;; Same thing, but with fixed (non-random) input
-  (do
-    (new-score!)
-    (play! (generate-score
-             ["Functional Conf"]
              4)))
 
   ;; e.e. cummings - (Me up at does)

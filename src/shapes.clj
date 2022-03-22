@@ -20,6 +20,7 @@
 
   ;; drop
   (drop 2 [■ ▲ ●])
+  (drop 2 (cycle [■ ▲ ●]))
   (take 10 (drop 2 (cycle [■ ▲ ●])))
 
   ;; equivalent to the previous example
