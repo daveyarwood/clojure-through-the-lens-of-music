@@ -1,6 +1,5 @@
 (ns music
-  (:require [alda.core :refer [connect! new-score! play! stop! part note pitch
-                               note-length midi-note ms]]))
+  (:require [alda.core :refer :all]))
 
 (comment
   (connect!)
@@ -233,7 +232,7 @@
 
   (play!
     (part "marimba")
-    notes))
+    notes)
 
 
 
@@ -242,3 +241,53 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  (defn periodic-notes
+    [divisor note-number & [{:keys [include-zero?]}]]
+    (map
+      (fn [n]
+        (if (or
+              (and include-zero? (zero? n))
+              (and (pos? n) (zero? (rem n divisor))))
+          (note (midi-note note-number) (ms 135))
+          (pause (ms 135))))
+      (range 96)))
+
+  (defn periodic-notes-inverse
+    [exclude-divisors note-number]
+    (map
+      (fn [n] (if (every? #(pos? (rem n %)) exclude-divisors)
+                (note (midi-note 42) (ms 135))
+                (pause (ms 135))))
+      (range 96)))
+
+  (do
+    (connect!)
+    (new-score!)
+    (play!
+      ;; fizz (divisible by 3)
+      (part "oboe") (vol 62) (pan 25)
+      (periodic-notes 3 80)
+
+      ;; buzz (divisible by 5)
+      (part "clarinet") (vol 57) (pan 75)
+      (periodic-notes 5 68)
+
+      (part "midi-percussion")
+      ;; hi-hat on every number that isn't divisible by 3 or 5
+      (voice 1) (vol 45)
+      (periodic-notes-inverse #{3 5} 42)
+      ;; kick drum
+      (voice 2) (periodic-notes 5 35 {:include-zero? true})
+      ;; triangle
+      (voice 3) (periodic-notes 15 81 {:include-zero? true}))))
