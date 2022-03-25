@@ -99,3 +99,12 @@ phrases, etc.) as calculations with the original data as input.
 image::racket.png[]
 
 https://docs.racket-lang.org/quick/
+
+== Let's chat!
+
+image::alda-slack.png[]
+
+* Register for free! -> https://slack.alda.io
+* Feel free to ask me (*@dave*) questions!
+* Email: *dave.yarwood@gmail.com*
+* Twitter: *@dave_yarwood*
