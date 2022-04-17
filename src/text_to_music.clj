@@ -103,7 +103,7 @@
 (defn generate-score
   [words repetitions]
   (let [score-info
-        {:tempo (+ 60 (rand-int 200))
+        {:tempo (+ 80 (rand-int 180))
          :parts (for [word words]
                   {:instrument (random-instrument)
                    :note-range (random-note-range)
@@ -140,11 +140,11 @@
   (stop!)
   (new-score!)
 
-  ;; The string "Functional Conf" as a musical phrase
+  ;; The string "Raleigh Durham Startup Week" as a musical phrase
   (do
     (new-score!)
     (play! (generate-score
-             ["Functional Conf"]
+             ["Raleigh Durham Startup Week"]
              4)))
 
   ;; 3 short, repeating parts

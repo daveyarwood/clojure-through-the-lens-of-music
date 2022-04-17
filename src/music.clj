@@ -134,6 +134,8 @@
 
   (rand-nth [1 2 3 4 5])
   (repeatedly 3 #(rand-nth [1 2 3 4 5]))
+  (cycle [1 2 3 4 5])
+  (take 8 (cycle [1 2 3 4 5]))
 
   (let [note-numbers (repeatedly 3 #(rand-nth (range 24 102)))]
     (prn :note-numbers note-numbers)
