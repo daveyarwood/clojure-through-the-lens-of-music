@@ -145,7 +145,7 @@
     (new-score!)
     (play! (generate-score
              ["Raleigh Durham Startup Week"]
-             4)))
+             1)))
 
   ;; 3 short, repeating parts
   ;; Generated from 3 random words from the dictionary
