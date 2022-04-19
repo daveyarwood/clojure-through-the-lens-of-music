@@ -52,8 +52,8 @@
       #(note (midi-note %1) (ms %2))
       ;; [data] The numbers 42-47
       (range 42 48)
-      ;; [data] The first 6 numbers in the sequence 100, 200, 400...
-      (take 6 (iterate #(* % 2) 100))))
+      ;; [data] The sequence 100, 200, 400...
+      (iterate #(* % 2) 100)))
 
 
 
